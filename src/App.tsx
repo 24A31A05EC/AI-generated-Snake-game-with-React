@@ -5,62 +5,43 @@ import { motion } from 'motion/react';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-black text-cyan-400 font-mono selection:bg-magenta-500/30 selection:text-magenta-400 overflow-hidden relative">
-      <div className="noise" />
-      <div className="scanline" />
+    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-cyan-500/30 selection:text-cyan-400 overflow-hidden relative">
+      {/* Background Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyan-500/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-pink-500/10 blur-[120px] rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(#1a1a1a_1px,transparent_1px)] [background-size:40px_40px] opacity-20" />
+      </div>
 
-      <main className="relative z-10 container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-screen gap-8">
+      <main className="relative z-10 container mx-auto px-4 py-12 flex flex-col items-center justify-center min-h-screen gap-12">
         <motion.header
-          initial={{ opacity: 0, scale: 1.2 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center space-y-4 w-full max-w-4xl"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center space-y-8 w-full max-w-4xl"
         >
-          <h1 className="text-4xl md:text-6xl font-pixel cyan-magenta-glow glitch-overlay" data-text="SYSTEM_OVERRIDE">
-            SYSTEM_OVERRIDE
-          </h1>
-          <div className="flex justify-center gap-4 text-xs font-pixel opacity-70">
-            <span className="animate-pulse">[ STATUS: COMPROMISED ]</span>
-            <span className="animate-pulse">[ SECTOR: 7G ]</span>
-            <span className="animate-pulse">[ INTEGRITY: 12% ]</span>
-          </div>
+          <div className="w-full h-24 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 shadow-[0_0_40px_rgba(6,182,212,0.5),0_0_40px_rgba(236,72,153,0.5)] rounded-sm border border-white/10" />
+          <p className="text-cyan-400 font-digital tracking-[0.5em] text-base md:text-lg uppercase font-black drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]">
+            RETRO GAMING • SYNTH BEATS • CYBER AESTHETIC
+          </p>
         </motion.header>
 
-        <div className="flex flex-col xl:flex-row items-start justify-center gap-8 w-full max-w-6xl">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-12 w-full">
           <motion.div
-            initial={{ opacity: 0, x: -100 }}
+            initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
-            className="w-full xl:w-1/3 space-y-8"
+            transition={{ delay: 0.2 }}
+            className="order-2 lg:order-1"
           >
-            <div className="border-glitch p-4 bg-black/80 backdrop-blur-sm">
-              <h2 className="text-lg font-pixel mb-4 text-magenta-500 underline">AUDIO_UPLINK</h2>
-              <MusicPlayer />
-            </div>
-            
-            <div className="border-glitch p-4 bg-black/80 backdrop-blur-sm hidden xl:block">
-              <h2 className="text-lg font-pixel mb-4 text-magenta-500 underline">SYS_LOGS</h2>
-              <div className="text-xs space-y-1 opacity-60">
-                <p>{'>'} INITIALIZING_SNAKE_PROTOCOL...</p>
-                <p>{'>'} ERROR: BUFFER_OVERFLOW_DETECTED</p>
-                <p>{'>'} ATTEMPTING_RECOVERY_IN_SECTOR_4...</p>
-                <p>{'>'} ACCESS_GRANTED_BY_ROOT_USER</p>
-                <p>{'>'} GLITCH_CORE_STABILIZED</p>
-              </div>
-            </div>
+            <MusicPlayer />
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.5, rotate: -5 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ delay: 0.4, type: "spring", damping: 12 }}
-            className="w-full xl:w-2/3 flex justify-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4 }}
+            className="order-1 lg:order-2"
           >
-            <div className="border-glitch p-2 bg-black relative">
-              <div className="absolute -top-6 left-4 bg-cyan-400 text-black px-2 py-1 text-[10px] font-pixel">
-                LIVE_FEED_01
-              </div>
-              <SnakeGame />
-            </div>
+            <SnakeGame />
           </motion.div>
         </div>
 
@@ -68,14 +49,14 @@ export default function App() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mt-auto pt-8 text-magenta-500 text-[10px] font-pixel tracking-tighter flex flex-col items-center gap-2"
+          className="mt-auto pt-12 text-gray-600 text-[10px] font-mono tracking-widest uppercase flex flex-col items-center gap-2"
         >
-          <div className="flex gap-8 border-t border-magenta-500/30 pt-4 w-full justify-center">
-            <span>CORE_TEMP: 88°C</span>
-            <span>PACKET_LOSS: 4.2%</span>
-            <span>ENCRYPTION: AES-GLITCH</span>
+          <div className="flex gap-4">
+            <span>System: Online</span>
+            <span>Latency: 12ms</span>
+            <span>Uptime: 99.9%</span>
           </div>
-          <p className="opacity-50">© 2026 VOID_TECH_INDUSTRIES // ALL_RIGHTS_RESERVED</p>
+          <p>© 2026 CyberCore Entertainment Systems</p>
         </motion.footer>
       </main>
     </div>

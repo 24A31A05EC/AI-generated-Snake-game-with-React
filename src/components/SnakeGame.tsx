@@ -128,61 +128,65 @@ export const SnakeGame: React.FC = () => {
 
     // Draw snake
     snake.forEach((segment, index) => {
-      ctx.fillStyle = index === 0 ? '#00ffff' : '#ff00ff';
-      ctx.shadowBlur = index === 0 ? 15 : 5;
-      ctx.shadowColor = index === 0 ? '#00ffff' : '#ff00ff';
+      ctx.fillStyle = index === 0 ? '#00ffcc' : '#00ccaa';
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = '#00ffcc';
       ctx.fillRect(segment.x * cellSize + 1, segment.y * cellSize + 1, cellSize - 2, cellSize - 2);
     });
 
     // Draw food
-    ctx.fillStyle = '#00ffff';
-    ctx.shadowBlur = 20;
-    ctx.shadowColor = '#00ffff';
-    ctx.fillRect(food.x * cellSize + 4, food.y * cellSize + 4, cellSize - 8, cellSize - 8);
+    ctx.fillStyle = '#ff0066';
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = '#ff0066';
+    ctx.beginPath();
+    ctx.arc(
+      food.x * cellSize + cellSize / 2,
+      food.y * cellSize + cellSize / 2,
+      cellSize / 2 - 2,
+      0,
+      Math.PI * 2
+    );
+    ctx.fill();
 
     ctx.shadowBlur = 0; // Reset shadow
   }, [snake, food]);
 
   return (
-    <div className="flex flex-col items-center gap-6 p-4 bg-black border-4 border-cyan-400 shadow-[8px_8px_#f0f]">
-      <div className="flex flex-col sm:flex-row gap-4 w-full mb-2">
-        <div className="flex-1 border-2 border-cyan-400 bg-black p-2 flex items-center justify-center shadow-[4px_4px_#f0f]">
-          <span className="text-cyan-400 font-pixel text-xs">
-            DATA_SCORE: {score.toString().padStart(4, '0')}
+    <div className="flex flex-col items-center gap-4 p-6 bg-black/40 rounded-2xl border border-cyan-500/30 backdrop-blur-md shadow-[0_0_30px_rgba(6,182,212,0.1)]">
+      <div className="flex gap-0 w-full mb-6">
+        <div className="flex-1 border-2 border-cyan-500/50 bg-cyan-500/10 py-3 px-4 flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+          <span className="text-cyan-400 font-digital text-3xl font-black tracking-widest drop-shadow-[0_0_10px_rgba(34,211,238,0.9)]">
+            SCORE: {score}
           </span>
         </div>
-        <div className="flex-1 border-2 border-magenta-500 bg-black p-2 flex items-center justify-center shadow-[4px_4px_#0ff]">
-          <span className={`text-magenta-500 font-pixel text-xs ${gameOver || isPaused ? 'animate-pulse' : ''}`}>
-            {gameOver ? 'SYS_FAILURE' : isPaused ? 'SYS_PAUSED' : 'SYS_ACTIVE'}
+        <div className="flex-1 border-2 border-pink-500/50 bg-pink-500/10 py-3 px-4 flex items-center justify-center shadow-[0_0_20px_rgba(236,72,153,0.3)]">
+          <span className={`text-pink-500 font-digital text-3xl font-black tracking-widest ${gameOver || isPaused ? 'animate-glitch' : ''} drop-shadow-[0_0_10px_rgba(236,72,153,0.9)]`}>
+            {gameOver ? 'GAME OVER' : isPaused ? 'PAUSED' : 'PLAYING'}
           </span>
         </div>
       </div>
       
-      <div className="relative border-4 border-cyan-400 shadow-[8px_8px_#f0f]">
+      <div className="relative group">
         <canvas
           ref={canvasRef}
           width={400}
           height={400}
-          className="bg-black"
+          className="rounded-lg border-2 border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.2)]"
         />
         {(gameOver || isPaused) && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm">
-            <h3 className="text-2xl font-pixel text-cyan-400 mb-8 glitch-overlay" data-text={gameOver ? "TERMINATED" : "INTERRUPTED"}>
-              {gameOver ? "TERMINATED" : "INTERRUPTED"}
-            </h3>
+          <div className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-lg backdrop-blur-[2px]">
             <button
               onClick={gameOver ? resetGame : () => setIsPaused(false)}
-              className="btn-glitch"
+              className="px-12 py-4 bg-cyan-400 text-black font-digital font-black text-xl rounded-full hover:bg-cyan-300 transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(34,211,238,0.8)] border-2 border-white/20"
             >
-              {gameOver ? 'REBOOT_SYS' : 'RESUME_LINK'}
+              {gameOver ? 'RESTART' : 'RESUME'}
             </button>
           </div>
         )}
       </div>
 
-      <div className="text-magenta-500 text-[10px] font-pixel opacity-70 flex flex-col items-center gap-1">
-        <p>[ ARROW_KEYS ] :: NAVIGATE_GRID</p>
-        <p>[ SPACE_BAR ] :: TOGGLE_PAUSE</p>
+      <div className="text-gray-500 text-sm font-mono">
+        USE ARROW KEYS TO MOVE • SPACE TO PAUSE
       </div>
     </div>
   );

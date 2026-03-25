@@ -1,5 +1,5 @@
 {
-  "name": "SYSTEM_OVERRIDE: GLITCH_SNAKE",
-  "description": "A retro-futurist glitch-art snake simulation. System integrity: COMPROMISED.",
+  "name": "Neon Snake & Beats",
+  "description": "A dark neon-themed Snake game integrated with a background music player.",
   "requestFramePermissions": []
 }

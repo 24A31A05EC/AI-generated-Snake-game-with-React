@@ -90,65 +90,66 @@ export const MusicPlayer: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-md p-4 bg-black border-4 border-magenta-500 shadow-[8px_8px_#0ff]">
+    <div className="w-full max-w-md p-6 bg-black/40 rounded-2xl border border-pink-500/30 backdrop-blur-md shadow-[0_0_30px_rgba(236,72,153,0.1)]">
       <audio ref={audioRef} />
       
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-4">
-          <div className="relative w-20 h-20 flex-shrink-0 border-2 border-magenta-500 shadow-[4px_4px_#0ff]">
-            <motion.img
-              key={currentTrack.id}
-              initial={{ opacity: 0, scale: 1.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              src={currentTrack.cover}
-              alt={currentTrack.title}
-              className="w-full h-full object-cover grayscale contrast-150"
-              referrerPolicy="no-referrer"
-            />
-            {isPlaying && (
-              <div className="absolute inset-0 bg-magenta-500/20 animate-pulse" />
-            )}
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <h3 className="text-magenta-500 font-pixel text-xs truncate glitch-overlay" data-text={currentTrack.title}>{currentTrack.title}</h3>
-            <p className="text-cyan-400 text-[10px] truncate font-mono mt-1">{'>'} {currentTrack.artist}</p>
-            
-            <div className="mt-4 flex items-center gap-4">
-              <button onClick={skipBackward} className="text-magenta-500 hover:text-cyan-400 transition-all active:translate-y-1">
-                <SkipBack size={20} fill="currentColor" />
-              </button>
-              <button
-                onClick={togglePlay}
-                className="w-10 h-10 flex items-center justify-center bg-magenta-500 text-black hover:bg-cyan-400 transition-all shadow-[4px_4px_#0ff] active:translate-x-1 active:translate-y-1"
-              >
-                {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="ml-1" />}
-              </button>
-              <button onClick={skipForward} className="text-magenta-500 hover:text-cyan-400 transition-all active:translate-y-1">
-                <SkipForward size={20} fill="currentColor" />
-              </button>
-            </div>
-          </div>
+      <div className="flex items-center gap-6">
+        <div className="relative w-24 h-24 flex-shrink-0">
+          <motion.img
+            key={currentTrack.id}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            src={currentTrack.cover}
+            alt={currentTrack.title}
+            className="w-full h-full rounded-xl object-cover border border-pink-500/50 shadow-[0_0_15px_rgba(236,72,153,0.3)]"
+            referrerPolicy="no-referrer"
+          />
+          {isPlaying && (
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="absolute -top-2 -right-2 bg-pink-500 p-1.5 rounded-full shadow-[0_0_10px_rgba(236,72,153,0.8)]"
+            >
+              <Music size={12} className="text-black" />
+            </motion.div>
+          )}
         </div>
 
-        <div className="space-y-2">
-          <div className="h-4 w-full bg-black border-2 border-magenta-500 relative overflow-hidden">
-            <motion.div
-              className="h-full bg-cyan-400"
-              animate={{ width: `${progress}%` }}
-              transition={{ type: 'spring', bounce: 0, duration: 0.2 }}
-            />
-            <div className="absolute inset-0 flex items-center justify-center text-[8px] font-pixel text-magenta-500 mix-blend-difference">
-              BUFFERING_STREAM... {Math.round(progress)}%
-            </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-pink-500 font-digital font-bold text-xl truncate drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">{currentTrack.title}</h3>
+          <p className="text-gray-400 text-sm truncate font-mono tracking-tight">{currentTrack.artist}</p>
+          
+          <div className="mt-4 flex items-center gap-6">
+            <button onClick={skipBackward} className="text-pink-500 hover:text-pink-400 transition-all transform hover:scale-110 drop-shadow-[0_0_10px_rgba(236,72,153,0.8)]">
+              <SkipBack size={24} fill="currentColor" />
+            </button>
+            <button
+              onClick={togglePlay}
+              className="w-14 h-14 flex items-center justify-center bg-pink-500 text-black rounded-full hover:bg-pink-400 transition-all shadow-[0_0_25px_rgba(236,72,153,0.8)] border-2 border-white/30"
+            >
+              {isPlaying ? <Pause size={28} fill="currentColor" /> : <Play size={28} fill="currentColor" className="ml-1" />}
+            </button>
+            <button onClick={skipForward} className="text-pink-500 hover:text-pink-400 transition-all transform hover:scale-110 drop-shadow-[0_0_10px_rgba(236,72,153,0.8)]">
+              <SkipForward size={24} fill="currentColor" />
+            </button>
           </div>
-          <div className="flex justify-between items-center text-[8px] font-pixel text-cyan-400/70">
-            <div className="flex items-center gap-1">
-              <Volume2 size={10} />
-              <span>LINK_ESTABLISHED</span>
-            </div>
-            <span className="uppercase">VOID_AUDIO_V2.4</span>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <div className="h-2 w-full bg-gray-900 rounded-full overflow-hidden border border-pink-500/20">
+          <motion.div
+            className="h-full bg-pink-500 shadow-[0_0_15px_rgba(236,72,153,0.8)]"
+            animate={{ width: `${progress}%` }}
+            transition={{ type: 'spring', bounce: 0, duration: 0.2 }}
+          />
+        </div>
+        <div className="mt-3 flex justify-between items-center">
+          <div className="flex items-center gap-2 text-pink-500/70 text-[10px] font-mono font-bold tracking-tighter">
+            <Volume2 size={12} />
+            <span>AUTO-PLAY ENABLED</span>
           </div>
+          <span className="text-pink-500/70 text-[10px] font-mono font-bold tracking-tighter uppercase">NEON AUDIO ENGINE V1.0</span>
         </div>
       </div>
     </div>
